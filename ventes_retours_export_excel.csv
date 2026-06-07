@@ -1,0 +1,151 @@
+id_commande;date;produit;categorie;prix_unitaire;quantite;statut;client_region
+1;02/01/2026;Souris;Entrée de gamme;19,9;5;Vente;Auvergne-Rhône-Alpes
+2;04/01/2026;Casque;Standard;49,9;1;Retour;Provence-Alpes-Côte d'Azur
+3;04/01/2026;Souris;Entrée de gamme;19,9;4;Retour;Île-de-France
+4;04/01/2026;Disque externe;Standard;69,0;1;Vente;Île-de-France
+5;06/01/2026;Souris;Entrée de gamme;19,9;3;Retour;Île-de-France
+6;07/01/2026;Webcam;Standard;34,9;2;Vente;Hauts-de-France
+7;07/01/2026;Tapis;Entrée de gamme;9,9;5;Vente;Auvergne-Rhône-Alpes
+8;08/01/2026;Souris;Entrée de gamme;19,9;1;Vente;Hauts-de-France
+9;08/01/2026;Hub USB;Entrée de gamme;14,9;1;Vente;Île-de-France
+10;09/01/2026;Disque externe;Standard;69,0;2;Vente;Occitanie
+11;10/01/2026;Casque;Standard;49,9;3;Vente;Île-de-France
+12;10/01/2026;Souris;Entrée de gamme;19,9;2;Vente;Île-de-France
+13;11/01/2026;Souris;Entrée de gamme;19,9;3;Vente;Grand Est
+14;11/01/2026;Casque;Standard;49,9;3;Vente;Occitanie
+15;11/01/2026;Clavier;Standard;79,0;2;Vente;Île-de-France
+16;14/01/2026;Casque;Standard;49,9;1;Vente;Île-de-France
+17;14/01/2026;Tapis;Entrée de gamme;9,9;2;Vente;Hauts-de-France
+18;15/01/2026;Hub USB;Entrée de gamme;14,9;1;Vente;Occitanie
+19;17/01/2026;Enceinte;Standard;89,9;3;Vente;Nouvelle-Aquitaine
+20;17/01/2026;Support écran;Entrée de gamme;24,9;1;Retour;Provence-Alpes-Côte d'Azur
+21;17/01/2026;Casque;Standard;49,9;3;Vente;Île-de-France
+22;18/01/2026;Hub USB;Entrée de gamme;14,9;1;Retour;Île-de-France
+23;18/01/2026;Webcam;Standard;34,9;2;Vente;Île-de-France
+24;20/01/2026;Tapis;Entrée de gamme;9,9;1;Vente;Hauts-de-France
+25;21/01/2026;Webcam;Standard;34,9;1;Vente;Nouvelle-Aquitaine
+26;21/01/2026;Support écran;Entrée de gamme;24,9;1;Vente;Auvergne-Rhône-Alpes
+27;22/01/2026;Webcam;Standard;34,9;1;Vente;Provence-Alpes-Côte d'Azur
+28;23/01/2026;Support écran;Entrée de gamme;24,9;1;Vente;Hauts-de-France
+29;23/01/2026;Webcam;Standard;34,9;4;Vente;Nouvelle-Aquitaine
+30;25/01/2026;Webcam;Standard;34,9;1;Vente;Provence-Alpes-Côte d'Azur
+31;25/01/2026;Webcam;Standard;34,9;1;Vente;Île-de-France
+32;26/01/2026;Support écran;Entrée de gamme;24,9;2;Vente;Auvergne-Rhône-Alpes
+33;27/01/2026;Casque;Standard;49,9;1;Vente;Grand Est
+34;28/01/2026;Clavier;Standard;79,0;5;Vente;Île-de-France
+35;29/01/2026;Tapis;Entrée de gamme;9,9;5;Vente;Provence-Alpes-Côte d'Azur
+36;29/01/2026;Casque;Standard;49,9;1;Vente;Nouvelle-Aquitaine
+37;29/01/2026;Souris;Entrée de gamme;19,9;1;Vente;Hauts-de-France
+38;31/01/2026;Support écran;Entrée de gamme;24,9;1;Vente;Grand Est
+39;31/01/2026;Casque;Standard;49,9;3;Vente;Île-de-France
+40;31/01/2026;Clavier;Standard;79,0;4;Vente;Nouvelle-Aquitaine
+41;31/01/2026;Micro USB;Standard;39,9;3;Vente;Provence-Alpes-Côte d'Azur
+42;31/01/2026;Support écran;Entrée de gamme;24,9;1;Vente;Occitanie
+43;01/02/2026;Souris;Entrée de gamme;19,9;3;Vente;Occitanie
+44;01/02/2026;Tapis;Entrée de gamme;9,9;2;Vente;Provence-Alpes-Côte d'Azur
+45;01/02/2026;Webcam;Standard;34,9;2;Vente;Provence-Alpes-Côte d'Azur
+46;02/02/2026;Souris;Entrée de gamme;19,9;1;Vente;Provence-Alpes-Côte d'Azur
+47;03/02/2026;Souris;Entrée de gamme;19,9;4;Vente;Provence-Alpes-Côte d'Azur
+48;03/02/2026;Souris;Entrée de gamme;19,9;5;Retour;Grand Est
+49;03/02/2026;Casque;Standard;49,9;1;Vente;Occitanie
+50;03/02/2026;Clavier;Standard;79,0;1;Retour;Île-de-France
+51;03/02/2026;Hub USB;Entrée de gamme;14,9;2;Vente;Île-de-France
+52;04/02/2026;Souris;Entrée de gamme;19,9;1;Vente;Provence-Alpes-Côte d'Azur
+53;05/02/2026;Support écran;Entrée de gamme;24,9;1;Vente;Occitanie
+54;05/02/2026;Souris;Entrée de gamme;19,9;1;Vente;Bretagne
+55;05/02/2026;Disque externe;Standard;69,0;3;Vente;Nouvelle-Aquitaine
+56;07/02/2026;Tapis;Entrée de gamme;9,9;1;Vente;Occitanie
+57;08/02/2026;Hub USB;Entrée de gamme;14,9;3;Vente;Hauts-de-France
+58;09/02/2026;Clavier;Standard;79,0;2;Retour;Grand Est
+59;10/02/2026;Micro USB;Standard;39,9;1;Vente;Hauts-de-France
+60;10/02/2026;Webcam;Standard;34,9;3;Retour;Grand Est
+61;10/02/2026;Clavier;Standard;79,0;4;Vente;Île-de-France
+62;10/02/2026;Casque;Standard;49,9;2;Vente;Nouvelle-Aquitaine
+63;11/02/2026;Support écran;Entrée de gamme;24,9;3;Vente;Île-de-France
+64;11/02/2026;Clavier;Standard;79,0;3;Vente;Occitanie
+65;11/02/2026;Imprimante;Premium;249,0;5;Vente;Occitanie
+66;12/02/2026;Enceinte;Standard;89,9;1;Retour;Grand Est
+67;12/02/2026;Hub USB;Entrée de gamme;14,9;4;Vente;Occitanie
+68;12/02/2026;Clavier;Standard;79,0;1;Retour;Île-de-France
+69;12/02/2026;Hub USB;Entrée de gamme;14,9;1;Vente;Auvergne-Rhône-Alpes
+70;13/02/2026;Hub USB;Entrée de gamme;14,9;1;Vente;Île-de-France
+71;13/02/2026;Support écran;Entrée de gamme;24,9;1;Vente;Île-de-France
+72;13/02/2026;Hub USB;Entrée de gamme;14,9;1;Vente;Île-de-France
+73;13/02/2026;Enceinte;Standard;89,9;1;Vente;Occitanie
+74;13/02/2026;Souris;Entrée de gamme;19,9;3;Vente;Occitanie
+75;14/02/2026;Tapis;Entrée de gamme;9,9;1;Vente;Bretagne
+76;15/02/2026;Casque;Standard;49,9;1;Vente;Provence-Alpes-Côte d'Azur
+77;16/02/2026;Casque;Standard;49,9;4;Vente;Occitanie
+78;16/02/2026;Hub USB;Entrée de gamme;14,9;5;Vente;Nouvelle-Aquitaine
+79;16/02/2026;Tapis;Entrée de gamme;9,9;1;Vente;Île-de-France
+80;17/02/2026;Clavier;Standard;79,0;3;Vente;Île-de-France
+81;18/02/2026;Clavier;Standard;79,0;2;Retour;Provence-Alpes-Côte d'Azur
+82;18/02/2026;Écran;Premium;199,0;2;Retour;Auvergne-Rhône-Alpes
+83;19/02/2026;Hub USB;Entrée de gamme;14,9;2;Vente;Occitanie
+84;19/02/2026;Clavier;Standard;79,0;1;Vente;Île-de-France
+85;19/02/2026;Tapis;Entrée de gamme;9,9;1;Vente;Hauts-de-France
+86;19/02/2026;Écran;Premium;199,0;2;Retour;Île-de-France
+87;21/02/2026;Tapis;Entrée de gamme;9,9;4;Vente;Nouvelle-Aquitaine
+88;22/02/2026;Hub USB;Entrée de gamme;14,9;2;Vente;Hauts-de-France
+89;22/02/2026;Micro USB;Standard;39,9;5;Retour;Grand Est
+90;22/02/2026;Tapis;Entrée de gamme;9,9;1;Vente;Île-de-France
+91;24/02/2026;Enceinte;Standard;89,9;3;Vente;Île-de-France
+92;25/02/2026;Enceinte;Standard;89,9;2;Vente;Île-de-France
+93;25/02/2026;Disque externe;Standard;69,0;2;Vente;Île-de-France
+94;25/02/2026;Webcam;Standard;34,9;2;Vente;Nouvelle-Aquitaine
+95;26/02/2026;Souris;Entrée de gamme;19,9;4;Vente;Occitanie
+96;26/02/2026;Hub USB;Entrée de gamme;14,9;3;Vente;Auvergne-Rhône-Alpes
+97;27/02/2026;Disque externe;Standard;69,0;1;Retour;Île-de-France
+98;27/02/2026;Micro USB;Standard;39,9;1;Vente;Île-de-France
+99;28/02/2026;Support écran;Entrée de gamme;24,9;1;Vente;Auvergne-Rhône-Alpes
+100;28/02/2026;Souris;Entrée de gamme;19,9;2;Retour;Île-de-France
+101;28/02/2026;Souris;Entrée de gamme;19,9;2;Vente;Île-de-France
+102;01/03/2026;Souris;Entrée de gamme;19,9;2;Vente;Île-de-France
+103;01/03/2026;Souris;Entrée de gamme;19,9;3;Vente;Grand Est
+104;02/03/2026;Disque externe;Standard;69,0;1;Vente;Île-de-France
+105;02/03/2026;Micro USB;Standard;39,9;1;Vente;Occitanie
+106;03/03/2026;Tapis;Entrée de gamme;9,9;1;Vente;Île-de-France
+107;04/03/2026;Tapis;Entrée de gamme;9,9;5;Vente;Provence-Alpes-Côte d'Azur
+108;07/03/2026;Tapis;Entrée de gamme;9,9;3;Vente;Île-de-France
+109;08/03/2026;Casque;Standard;49,9;4;Retour;Occitanie
+110;09/03/2026;Souris;Entrée de gamme;19,9;2;Vente;Provence-Alpes-Côte d'Azur
+111;09/03/2026;Enceinte;Standard;89,9;3;Vente;Bretagne
+112;10/03/2026;Micro USB;Standard;39,9;5;Retour;Île-de-France
+113;10/03/2026;Clavier;Standard;79,0;4;Vente;Bretagne
+114;10/03/2026;Souris;Entrée de gamme;19,9;2;Retour;Île-de-France
+115;10/03/2026;Enceinte;Standard;89,9;1;Vente;Bretagne
+116;10/03/2026;Souris;Entrée de gamme;19,9;4;Vente;Île-de-France
+117;11/03/2026;Casque;Standard;49,9;4;Vente;Provence-Alpes-Côte d'Azur
+118;11/03/2026;Souris;Entrée de gamme;19,9;5;Vente;Grand Est
+119;11/03/2026;Micro USB;Standard;39,9;2;Vente;Provence-Alpes-Côte d'Azur
+120;12/03/2026;Écran;Premium;199,0;3;Vente;Île-de-France
+121;12/03/2026;Hub USB;Entrée de gamme;14,9;3;Vente;Auvergne-Rhône-Alpes
+122;13/03/2026;Clavier;Standard;79,0;5;Vente;Bretagne
+123;13/03/2026;Souris;Entrée de gamme;19,9;3;Vente;Provence-Alpes-Côte d'Azur
+124;14/03/2026;Support écran;Entrée de gamme;24,9;1;Vente;Provence-Alpes-Côte d'Azur
+125;14/03/2026;Imprimante;Premium;249,0;3;Vente;Hauts-de-France
+126;15/03/2026;Webcam;Standard;34,9;1;Vente;Auvergne-Rhône-Alpes
+127;15/03/2026;Support écran;Entrée de gamme;24,9;5;Vente;Île-de-France
+128;16/03/2026;Souris;Entrée de gamme;19,9;3;Vente;Île-de-France
+129;18/03/2026;Imprimante;Premium;249,0;3;Vente;Grand Est
+130;18/03/2026;Webcam;Standard;34,9;3;Vente;Île-de-France
+131;19/03/2026;Casque;Standard;49,9;2;Vente;Hauts-de-France
+132;19/03/2026;Hub USB;Entrée de gamme;14,9;1;Vente;Île-de-France
+133;22/03/2026;Support écran;Entrée de gamme;24,9;3;Vente;Grand Est
+134;22/03/2026;Hub USB;Entrée de gamme;14,9;2;Vente;Auvergne-Rhône-Alpes
+135;22/03/2026;Souris;Entrée de gamme;19,9;2;Retour;Île-de-France
+136;23/03/2026;Clavier;Standard;79,0;4;Vente;Île-de-France
+137;23/03/2026;Support écran;Entrée de gamme;24,9;5;Vente;Grand Est
+138;25/03/2026;Webcam;Standard;34,9;3;Vente;Île-de-France
+139;25/03/2026;Webcam;Standard;34,9;1;Vente;Occitanie
+140;26/03/2026;Disque externe;Standard;69,0;1;Vente;Île-de-France
+141;26/03/2026;Tapis;Entrée de gamme;9,9;3;Vente;Île-de-France
+142;26/03/2026;Clavier;Standard;79,0;1;Vente;Île-de-France
+143;26/03/2026;Webcam;Standard;34,9;2;Vente;Occitanie
+144;27/03/2026;Hub USB;Entrée de gamme;14,9;2;Vente;Auvergne-Rhône-Alpes
+145;27/03/2026;Micro USB;Standard;39,9;1;Vente;Provence-Alpes-Côte d'Azur
+146;30/03/2026;Webcam;Standard;34,9;3;Vente;Nouvelle-Aquitaine
+147;30/03/2026;Webcam;Standard;34,9;1;Retour;Île-de-France
+148;31/03/2026;Disque externe;Standard;69,0;1;Vente;Île-de-France
+149;31/03/2026;Casque;Standard;49,9;4;Vente;Île-de-France
+150;31/03/2026;Clavier;Standard;79,0;3;Vente;Auvergne-Rhône-Alpes

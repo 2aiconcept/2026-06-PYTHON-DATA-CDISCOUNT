@@ -1,0 +1,151 @@
+id_commande,date,produit,categorie,prix_unitaire,quantite,statut,client_region
+1,2026-01-02,Souris,Entrée de gamme,19.90,5,Vente,Auvergne-Rhône-Alpes
+2,2026-01-04,Casque,Standard,49.90,1,Retour,Provence-Alpes-Côte d'Azur
+3,2026-01-04,Souris,Entrée de gamme,19.90,4,Retour,Île-de-France
+4,2026-01-04,Disque externe,Standard,69.00,1,Vente,Île-de-France
+5,2026-01-06,Souris,Entrée de gamme,19.90,3,Retour,Île-de-France
+6,2026-01-07,Webcam,Standard,34.90,2,Vente,Hauts-de-France
+7,2026-01-07,Tapis,Entrée de gamme,9.90,5,Vente,Auvergne-Rhône-Alpes
+8,2026-01-08,Souris,Entrée de gamme,19.90,1,Vente,Hauts-de-France
+9,2026-01-08,Hub USB,Entrée de gamme,14.90,1,Vente,Île-de-France
+10,2026-01-09,Disque externe,Standard,69.00,2,Vente,Occitanie
+11,2026-01-10,Casque,Standard,49.90,3,Vente,Île-de-France
+12,2026-01-10,Souris,Entrée de gamme,19.90,2,Vente,Île-de-France
+13,2026-01-11,Souris,Entrée de gamme,19.90,3,Vente,Grand Est
+14,2026-01-11,Casque,Standard,49.90,3,Vente,Occitanie
+15,2026-01-11,Clavier,Standard,79.00,2,Vente,Île-de-France
+16,2026-01-14,Casque,Standard,49.90,1,Vente,Île-de-France
+17,2026-01-14,Tapis,Entrée de gamme,9.90,2,Vente,Hauts-de-France
+18,2026-01-15,Hub USB,Entrée de gamme,14.90,1,Vente,Occitanie
+19,2026-01-17,Enceinte,Standard,89.90,3,Vente,Nouvelle-Aquitaine
+20,2026-01-17,Support écran,Entrée de gamme,24.90,1,Retour,Provence-Alpes-Côte d'Azur
+21,2026-01-17,Casque,Standard,49.90,3,Vente,Île-de-France
+22,2026-01-18,Hub USB,Entrée de gamme,14.90,1,Retour,Île-de-France
+23,2026-01-18,Webcam,Standard,34.90,2,Vente,Île-de-France
+24,2026-01-20,Tapis,Entrée de gamme,9.90,1,Vente,Hauts-de-France
+25,2026-01-21,Webcam,Standard,34.90,1,Vente,Nouvelle-Aquitaine
+26,2026-01-21,Support écran,Entrée de gamme,24.90,1,Vente,Auvergne-Rhône-Alpes
+27,2026-01-22,Webcam,Standard,34.90,1,Vente,Provence-Alpes-Côte d'Azur
+28,2026-01-23,Support écran,Entrée de gamme,24.90,1,Vente,Hauts-de-France
+29,2026-01-23,Webcam,Standard,34.90,4,Vente,Nouvelle-Aquitaine
+30,2026-01-25,Webcam,Standard,34.90,1,Vente,Provence-Alpes-Côte d'Azur
+31,2026-01-25,Webcam,Standard,34.90,1,Vente,Île-de-France
+32,2026-01-26,Support écran,Entrée de gamme,24.90,2,Vente,Auvergne-Rhône-Alpes
+33,2026-01-27,Casque,Standard,49.90,1,Vente,Grand Est
+34,2026-01-28,Clavier,Standard,79.00,5,Vente,Île-de-France
+35,2026-01-29,Tapis,Entrée de gamme,9.90,5,Vente,Provence-Alpes-Côte d'Azur
+36,2026-01-29,Casque,Standard,49.90,1,Vente,Nouvelle-Aquitaine
+37,2026-01-29,Souris,Entrée de gamme,19.90,1,Vente,Hauts-de-France
+38,2026-01-31,Support écran,Entrée de gamme,24.90,1,Vente,Grand Est
+39,2026-01-31,Casque,Standard,49.90,3,Vente,Île-de-France
+40,2026-01-31,Clavier,Standard,79.00,4,Vente,Nouvelle-Aquitaine
+41,2026-01-31,Micro USB,Standard,39.90,3,Vente,Provence-Alpes-Côte d'Azur
+42,2026-01-31,Support écran,Entrée de gamme,24.90,1,Vente,Occitanie
+43,2026-02-01,Souris,Entrée de gamme,19.90,3,Vente,Occitanie
+44,2026-02-01,Tapis,Entrée de gamme,9.90,2,Vente,Provence-Alpes-Côte d'Azur
+45,2026-02-01,Webcam,Standard,34.90,2,Vente,Provence-Alpes-Côte d'Azur
+46,2026-02-02,Souris,Entrée de gamme,19.90,1,Vente,Provence-Alpes-Côte d'Azur
+47,2026-02-03,Souris,Entrée de gamme,19.90,4,Vente,Provence-Alpes-Côte d'Azur
+48,2026-02-03,Souris,Entrée de gamme,19.90,5,Retour,Grand Est
+49,2026-02-03,Casque,Standard,49.90,1,Vente,Occitanie
+50,2026-02-03,Clavier,Standard,79.00,1,Retour,Île-de-France
+51,2026-02-03,Hub USB,Entrée de gamme,14.90,2,Vente,Île-de-France
+52,2026-02-04,Souris,Entrée de gamme,19.90,1,Vente,Provence-Alpes-Côte d'Azur
+53,2026-02-05,Support écran,Entrée de gamme,24.90,1,Vente,Occitanie
+54,2026-02-05,Souris,Entrée de gamme,19.90,1,Vente,Bretagne
+55,2026-02-05,Disque externe,Standard,69.00,3,Vente,Nouvelle-Aquitaine
+56,2026-02-07,Tapis,Entrée de gamme,9.90,1,Vente,Occitanie
+57,2026-02-08,Hub USB,Entrée de gamme,14.90,3,Vente,Hauts-de-France
+58,2026-02-09,Clavier,Standard,79.00,2,Retour,Grand Est
+59,2026-02-10,Micro USB,Standard,39.90,1,Vente,Hauts-de-France
+60,2026-02-10,Webcam,Standard,34.90,3,Retour,Grand Est
+61,2026-02-10,Clavier,Standard,79.00,4,Vente,Île-de-France
+62,2026-02-10,Casque,Standard,49.90,2,Vente,Nouvelle-Aquitaine
+63,2026-02-11,Support écran,Entrée de gamme,24.90,3,Vente,Île-de-France
+64,2026-02-11,Clavier,Standard,79.00,3,Vente,Occitanie
+65,2026-02-11,Imprimante,Premium,249.00,5,Vente,Occitanie
+66,2026-02-12,Enceinte,Standard,89.90,1,Retour,Grand Est
+67,2026-02-12,Hub USB,Entrée de gamme,14.90,4,Vente,Occitanie
+68,2026-02-12,Clavier,Standard,79.00,1,Retour,Île-de-France
+69,2026-02-12,Hub USB,Entrée de gamme,14.90,1,Vente,Auvergne-Rhône-Alpes
+70,2026-02-13,Hub USB,Entrée de gamme,14.90,1,Vente,Île-de-France
+71,2026-02-13,Support écran,Entrée de gamme,24.90,1,Vente,Île-de-France
+72,2026-02-13,Hub USB,Entrée de gamme,14.90,1,Vente,Île-de-France
+73,2026-02-13,Enceinte,Standard,89.90,1,Vente,Occitanie
+74,2026-02-13,Souris,Entrée de gamme,19.90,3,Vente,Occitanie
+75,2026-02-14,Tapis,Entrée de gamme,9.90,1,Vente,Bretagne
+76,2026-02-15,Casque,Standard,49.90,1,Vente,Provence-Alpes-Côte d'Azur
+77,2026-02-16,Casque,Standard,49.90,4,Vente,Occitanie
+78,2026-02-16,Hub USB,Entrée de gamme,14.90,5,Vente,Nouvelle-Aquitaine
+79,2026-02-16,Tapis,Entrée de gamme,9.90,1,Vente,Île-de-France
+80,2026-02-17,Clavier,Standard,79.00,3,Vente,Île-de-France
+81,2026-02-18,Clavier,Standard,79.00,2,Retour,Provence-Alpes-Côte d'Azur
+82,2026-02-18,Écran,Premium,199.00,2,Retour,Auvergne-Rhône-Alpes
+83,2026-02-19,Hub USB,Entrée de gamme,14.90,2,Vente,Occitanie
+84,2026-02-19,Clavier,Standard,79.00,1,Vente,Île-de-France
+85,2026-02-19,Tapis,Entrée de gamme,9.90,1,Vente,Hauts-de-France
+86,2026-02-19,Écran,Premium,199.00,2,Retour,Île-de-France
+87,2026-02-21,Tapis,Entrée de gamme,9.90,4,Vente,Nouvelle-Aquitaine
+88,2026-02-22,Hub USB,Entrée de gamme,14.90,2,Vente,Hauts-de-France
+89,2026-02-22,Micro USB,Standard,39.90,5,Retour,Grand Est
+90,2026-02-22,Tapis,Entrée de gamme,9.90,1,Vente,Île-de-France
+91,2026-02-24,Enceinte,Standard,89.90,3,Vente,Île-de-France
+92,2026-02-25,Enceinte,Standard,89.90,2,Vente,Île-de-France
+93,2026-02-25,Disque externe,Standard,69.00,2,Vente,Île-de-France
+94,2026-02-25,Webcam,Standard,34.90,2,Vente,Nouvelle-Aquitaine
+95,2026-02-26,Souris,Entrée de gamme,19.90,4,Vente,Occitanie
+96,2026-02-26,Hub USB,Entrée de gamme,14.90,3,Vente,Auvergne-Rhône-Alpes
+97,2026-02-27,Disque externe,Standard,69.00,1,Retour,Île-de-France
+98,2026-02-27,Micro USB,Standard,39.90,1,Vente,Île-de-France
+99,2026-02-28,Support écran,Entrée de gamme,24.90,1,Vente,Auvergne-Rhône-Alpes
+100,2026-02-28,Souris,Entrée de gamme,19.90,2,Retour,Île-de-France
+101,2026-02-28,Souris,Entrée de gamme,19.90,2,Vente,Île-de-France
+102,2026-03-01,Souris,Entrée de gamme,19.90,2,Vente,Île-de-France
+103,2026-03-01,Souris,Entrée de gamme,19.90,3,Vente,Grand Est
+104,2026-03-02,Disque externe,Standard,69.00,1,Vente,Île-de-France
+105,2026-03-02,Micro USB,Standard,39.90,1,Vente,Occitanie
+106,2026-03-03,Tapis,Entrée de gamme,9.90,1,Vente,Île-de-France
+107,2026-03-04,Tapis,Entrée de gamme,9.90,5,Vente,Provence-Alpes-Côte d'Azur
+108,2026-03-07,Tapis,Entrée de gamme,9.90,3,Vente,Île-de-France
+109,2026-03-08,Casque,Standard,49.90,4,Retour,Occitanie
+110,2026-03-09,Souris,Entrée de gamme,19.90,2,Vente,Provence-Alpes-Côte d'Azur
+111,2026-03-09,Enceinte,Standard,89.90,3,Vente,Bretagne
+112,2026-03-10,Micro USB,Standard,39.90,5,Retour,Île-de-France
+113,2026-03-10,Clavier,Standard,79.00,4,Vente,Bretagne
+114,2026-03-10,Souris,Entrée de gamme,19.90,2,Retour,Île-de-France
+115,2026-03-10,Enceinte,Standard,89.90,1,Vente,Bretagne
+116,2026-03-10,Souris,Entrée de gamme,19.90,4,Vente,Île-de-France
+117,2026-03-11,Casque,Standard,49.90,4,Vente,Provence-Alpes-Côte d'Azur
+118,2026-03-11,Souris,Entrée de gamme,19.90,5,Vente,Grand Est
+119,2026-03-11,Micro USB,Standard,39.90,2,Vente,Provence-Alpes-Côte d'Azur
+120,2026-03-12,Écran,Premium,199.00,3,Vente,Île-de-France
+121,2026-03-12,Hub USB,Entrée de gamme,14.90,3,Vente,Auvergne-Rhône-Alpes
+122,2026-03-13,Clavier,Standard,79.00,5,Vente,Bretagne
+123,2026-03-13,Souris,Entrée de gamme,19.90,3,Vente,Provence-Alpes-Côte d'Azur
+124,2026-03-14,Support écran,Entrée de gamme,24.90,1,Vente,Provence-Alpes-Côte d'Azur
+125,2026-03-14,Imprimante,Premium,249.00,3,Vente,Hauts-de-France
+126,2026-03-15,Webcam,Standard,34.90,1,Vente,Auvergne-Rhône-Alpes
+127,2026-03-15,Support écran,Entrée de gamme,24.90,5,Vente,Île-de-France
+128,2026-03-16,Souris,Entrée de gamme,19.90,3,Vente,Île-de-France
+129,2026-03-18,Imprimante,Premium,249.00,3,Vente,Grand Est
+130,2026-03-18,Webcam,Standard,34.90,3,Vente,Île-de-France
+131,2026-03-19,Casque,Standard,49.90,2,Vente,Hauts-de-France
+132,2026-03-19,Hub USB,Entrée de gamme,14.90,1,Vente,Île-de-France
+133,2026-03-22,Support écran,Entrée de gamme,24.90,3,Vente,Grand Est
+134,2026-03-22,Hub USB,Entrée de gamme,14.90,2,Vente,Auvergne-Rhône-Alpes
+135,2026-03-22,Souris,Entrée de gamme,19.90,2,Retour,Île-de-France
+136,2026-03-23,Clavier,Standard,79.00,4,Vente,Île-de-France
+137,2026-03-23,Support écran,Entrée de gamme,24.90,5,Vente,Grand Est
+138,2026-03-25,Webcam,Standard,34.90,3,Vente,Île-de-France
+139,2026-03-25,Webcam,Standard,34.90,1,Vente,Occitanie
+140,2026-03-26,Disque externe,Standard,69.00,1,Vente,Île-de-France
+141,2026-03-26,Tapis,Entrée de gamme,9.90,3,Vente,Île-de-France
+142,2026-03-26,Clavier,Standard,79.00,1,Vente,Île-de-France
+143,2026-03-26,Webcam,Standard,34.90,2,Vente,Occitanie
+144,2026-03-27,Hub USB,Entrée de gamme,14.90,2,Vente,Auvergne-Rhône-Alpes
+145,2026-03-27,Micro USB,Standard,39.90,1,Vente,Provence-Alpes-Côte d'Azur
+146,2026-03-30,Webcam,Standard,34.90,3,Vente,Nouvelle-Aquitaine
+147,2026-03-30,Webcam,Standard,34.90,1,Retour,Île-de-France
+148,2026-03-31,Disque externe,Standard,69.00,1,Vente,Île-de-France
+149,2026-03-31,Casque,Standard,49.90,4,Vente,Île-de-France
+150,2026-03-31,Clavier,Standard,79.00,3,Vente,Auvergne-Rhône-Alpes
