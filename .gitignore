@@ -27,6 +27,8 @@ __pycache__/
 .env.local
 *.secret
 credentials.json
+.claude/secrets.local.md
+.claude/settings.local.json
 
 # =====================================================
 # VS Code (parametres locaux a ta machine)
