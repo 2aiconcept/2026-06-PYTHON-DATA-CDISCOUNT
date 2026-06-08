@@ -1,0 +1,62 @@
+[
+  {
+    "produit": "Souris",
+    "note_moyenne": 4.3,
+    "nb_avis": 512
+  },
+  {
+    "produit": "Casque",
+    "note_moyenne": 4.6,
+    "nb_avis": 874
+  },
+  {
+    "produit": "Disque externe",
+    "note_moyenne": 4.1,
+    "nb_avis": 203
+  },
+  {
+    "produit": "Webcam",
+    "note_moyenne": 3.8,
+    "nb_avis": 147
+  },
+  {
+    "produit": "Tapis",
+    "note_moyenne": 4.4,
+    "nb_avis": 321
+  },
+  {
+    "produit": "Hub USB",
+    "note_moyenne": 4.0,
+    "nb_avis": 98
+  },
+  {
+    "produit": "Clavier",
+    "note_moyenne": 4.5,
+    "nb_avis": 656
+  },
+  {
+    "produit": "Enceinte",
+    "note_moyenne": 4.2,
+    "nb_avis": 489
+  },
+  {
+    "produit": "Support écran",
+    "note_moyenne": 3.9,
+    "nb_avis": 76
+  },
+  {
+    "produit": "Micro USB",
+    "note_moyenne": 3.7,
+    "nb_avis": 54
+  },
+  {
+    "produit": "Imprimante",
+    "note_moyenne": 3.5,
+    "nb_avis": 412
+  },
+  {
+    "produit": "Écran",
+    "note_moyenne": 4.7,
+    "nb_avis": 938
+  }
+]

@@ -64,6 +64,8 @@ desktop.ini
 # Les stagiaires les régénèrent en faisant les exos
 # =====================================================
 *.xlsx
+# Exception : fichier SOURCE fourni aux stagiaires (4.3) -> doit etre dans le ZIP GitHub
+!objectifs_commerciaux_2026.xlsx
 *.db
 rapport_*
 catalogue.db
