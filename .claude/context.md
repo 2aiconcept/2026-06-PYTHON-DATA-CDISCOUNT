@@ -11,9 +11,9 @@
 
 ## 1. Le projet
 
-Formation **Python Data de 4 jours pour Cdiscount**, en présentiel, pour **4 stagiaires** data analysts /
-responsables pricing : **débutants complets en Python**, mais avec un **solide socle SQL** (passerelle
-pédagogique principale).
+Formation **Python Data de 4 jours pour Cdiscount**, en présentiel, pour **10 stagiaires** data analysts /
+pricing managers : **débutants complets en Python**, mais à l'aise en **SQL** et **Excel** (passerelles
+pédagogiques principales).
 
 - **Formateur** : Sébastien Gueroult, 2AI Concept (dev front/back JS confirmé, débutant Python). Email : contact@2aiconcept.com
 - **Client** : Loïc Sutel (pricing) et Raphaël Combasson (data analyst). Stagiaires identifiés : Soumaya, Aurore.
@@ -38,6 +38,12 @@ par Sébastien (il copie-colle les cellules dans le notebook puis dit « on ench
 6. **Pas de Q&A violet pré-anticipées** dans le guide ; préférer des callouts « pour aller plus loin ».
 7. **Toujours garder `.copy()`** après un filtre (`df[...].copy()`), même si pandas 3 (Copy-on-Write) le rend
    optionnel. Réflexe défensif + portabilité pandas 2. (Validé par Sébastien.)
+8. **Commentaires de code SANS accents** (encoding console Windows cp1252). La prose Markdown garde ses accents ;
+   seuls les commentaires/`print` dans les cellules de code s'écrivent sans accent (« reflexe defensif », pas
+   « réflexe défensif »). Important surtout pour les scripts exécutés hors notebook (J4 cas d'usage).
+9. **Code des cas d'usage J4 : réutilisable TEL QUEL en prod.** Hormis les **connexions** (credentials Snowflake,
+   chemins de répertoires partagés, URLs internes), aucune ligne ne doit être réécrite pour passer du TP à la prod.
+   Code idiomatique et robuste : `try/except` sur toute source externe, fallbacks explicites, fonctions réutilisables.
 
 ---
 
@@ -127,7 +133,7 @@ Résultats clés vérifiés (chapitre 3.8) : CA total ventes = **13 927,70 €**
 - **Fil rouge du pattern** : `merge → filtre → colonne calculée → agrégation`. Le merge se branche EN AMONT de la
   chaîne `filtre → colonne calculée → agrégation` apprise au chapitre 3.
 - **Ponts narratifs** : SQLite 3.6 → Snowflake 4.2 (même `read_sql_query`) ; CSV 3.7-3.8 → multi-sources 4.5.
-- **Quiz 2** : à construire APRÈS le contenu du chapitre 4, pas avant.
+- **Quiz 2** : ❌ PAS dans le notebook — Sébastien le fait directement dans le **guide HTML** via l'app Claude (décision prise en fin de chapitre 4).
 
 ---
 
@@ -137,14 +143,57 @@ Résultats clés vérifiés (chapitre 3.8) : CA total ventes = **13 927,70 €**
 |---|---|---|
 | **4.1 Pandas approfondi** | 4.1.1 merge (4 types, jouet) · 4.1.2 merge réel (référentiel → marge) · 4.1.3 concat (+ piège `.append()`) · 4.1.4 dates avancées (`to_datetime`, `.dt`, `Timedelta`) | ✅ TERMINÉ |
 | **4.2 Snowflake** | 4.2.1 connexion (getpass, cas A/B) · 4.2.2 `read_sql_query` + merge catalogue · 4.2.3 règle d'or « filtrer côté serveur » (chronométré) · 4.2.4 bonnes pratiques (`with`, secrets, `LIMIT`, `close`) | ✅ TERMINÉ |
-| **4.3 Lire Excel et JSON** | `pd.read_excel` (multi-feuilles, `sheet_name`) · `pd.read_json` (réponse API aplatie). Volontairement basique. | ⏳ À FAIRE |
-| **4.4 Nettoyage rapide** | `drop_duplicates`, `isna`/`fillna`/`dropna`, `astype`. Message : « 80 % du travail data = nettoyer ». | ⏳ À FAIRE |
-| **4.5 TP S1 Reporting multi-sources** | Combiner table Snowflake + Excel local + JSON API en un rapport pandas. Mêmes 4 réflexes. Énoncé + correction + décodage. | ⏳ À FAIRE |
-| **4.6 Récap chapitre 4** | Callout récap + tableau des outils + 4 réflexes data. | ⏳ À FAIRE |
+| **4.3 Lire Excel et JSON** | 4.3.1 `pd.read_excel` (multi-feuilles, `sheet_name`) · 4.3.2 `pd.read_json` (liste plate, fichier local + callout `requests`). | ✅ TERMINÉ |
+| **4.4 Nettoyage rapide** | 4.4.1 `drop_duplicates` · 4.4.2 `isna`/`fillna`/`dropna` · 4.4.3 `astype` (table « sale » fil rouge). Bonus : `round` banquier vs `Decimal` ROUND_HALF_UP. | ✅ TERMINÉ |
+| **4.5 TP S1 Reporting multi-sources** | Rapport par catégorie : Snowflake (CA agrégé serveur) + Excel (objectifs/responsables) + JSON (avis) → `merge`×3 + colonnes calculées. Énoncé **guidé pas à pas** + correction 1 cellule. | ✅ TERMINÉ |
+| **4.6 Récap chapitre 4** | ❌ PAS dans le notebook — Sébastien le fait directement dans le **guide HTML** via l'app Claude. | ⏭️ HORS NOTEBOOK |
 
 ---
 
-## 9. Journal d'avancement (mettre à jour à chaque chapitre terminé)
+## 9. Cas d'usage J4 (nouveau bloc — notebook à créer)
+
+> Le contenu « chapitres » (J1→J3 = chapitres 1 à 4) est **terminé dans le guide HTML**. Le J4 est un bloc à part :
+> deux **cas d'usage métier** + un **Quiz 3 final**. Nouveau prompt cadre fourni par Sébastien (mémorisé ici).
+
+**Structure du J4 (timing pour MOI, jamais écrit dans les énoncés) :**
+- **Matin** : Cas 1 — **Google Trends** (remonté par Loïc Sutel, pricing).
+- **Après-midi** : Cas 2 — **Task Scheduler Windows** (remonté par Aurore via Raphaël). Boucle narrative :
+  « on a écrit le script le matin → on l'automatise pour qu'il tourne seul tous les jours à 8h ».
+- **Clôture** : **Quiz 3** final de synthèse (5 QCM : pandas, Snowflake, APIs, nettoyage, automatisation), 10-15 min.
+
+**⚠️ On ne produit QUE ces 2 cas (Google Trends + Task Scheduler).** Les 4 cas bonus sont gérés par Sébastien
+en autonomie post-formation — **NE PAS les produire** : L1 Météo France (`requests`), S3 Prophet + LLM, A3 Microsoft
+(`pywin32` Excel/Outlook), A1 sFTP (`paramiko`).
+
+**Règles de production spécifiques J4** (en plus des conventions §2-§3) :
+- **Code réutilisable tel quel en prod** (sauf connexions) — voir convention §2.9.
+- **Robustesse** : `try/except` sur toute source externe, fallbacks explicites, commentaires FR sans accents.
+- **Format par cas** : 1 cellule Markdown (énoncé **guidé pas-à-pas**, style TP 4.5) + 1 cellule Code (solution
+  d'un seul tenant, **vérifiée en bash avant livraison**) + **sortie verrouillée** (je donne la vraie sortie à coller
+  dans le guide) + **décodage à l'oral** (4-6 points, dans la conversation, hors notebook).
+- **Avant chaque cas : demander à Sébastien ce qu'il veut produire en premier.** Ne pas tout lancer d'un coup.
+
+**Cas 1 — Google Trends (détail technique) :**
+- Lib : **`trendspyg==0.4.3`** (alternative moderne à pytrends) ; dépend de **Chrome headless**.
+- Pipeline cible : `download_google_trends_csv(geo='FR', hours=168, category='shopping')` → ~400 trends bruts
+  → **set-difference** vs historique JSON (snapshots précédents) pour détecter les « nouveaux » (≈ `EXCEPT` SQL)
+  → top 25 trié par trafic → sauvegarde du nouveau snapshot dans l'historique.
+- Résilience : `try/except` + **snapshot CSV de secours** pré-téléchargé par Sébastien avant le J3.
+- **Historique simulé** : 6-8 snapshots JSON crédibles, fabriqués **par Sébastien en amont**.
+- Volumétrie script v1 CSV : ~70 lignes. **Variante bonus** (si temps) : ~15 lignes via le **flux RSS** Google Trends
+  (découplage source/traitement).
+
+**Cas 2 — Task Scheduler Windows (détail) :**
+- Automatiser l'exécution quotidienne du script Google Trends **sans droits admin** (tâches utilisateur suffisent).
+- Pointer le **`python.exe` du venv** + chemin absolu du script ; gérer le **working directory** (fichiers I/O au bon
+  endroit) ; tester exécution manuelle puis planifiée ; variantes logs / fréquence / conditions de déclenchement.
+
+**Stack / environnement J4 :** venv DSI `myenv` (Python 3.13.13) avec `trendspyg`, `paramiko`, `pywin32` + libs data.
+Stagiaires sans droits admin Windows.
+
+---
+
+## 10. Journal d'avancement (mettre à jour à chaque chapitre terminé)
 
 - **Chapitre 3 (`03_jour1.ipynb`)** — TERMINÉ. Inclut le mini-projet 3.8 (5 questions métier, tableau de bord,
   export Excel simple + formaté openpyxl, mini-défi Excel français 3.8.9).
@@ -152,9 +201,30 @@ Résultats clés vérifiés (chapitre 3.8) : CA total ventes = **13 927,70 €**
   (mapping `.dt.dayofweek` + `strftime("%d/%m/%Y")`).
 - **4.2 Snowflake** — TERMINÉ (4.2.1 → 4.2.4). Connexion opérationnelle, warning filtré, démo « filtrer côté serveur »
   validée (réel : 20 000 lignes / 2,89 s → 2 422 lignes / 0,15 s pour l'Île-de-France). Variante `with` autonome fournie.
+- **4.3 Lire Excel et JSON** — TERMINÉ. Nouveaux fichiers SOURCE générés par `generer_objectifs_et_avis.py` :
+  `objectifs_commerciaux_2026.xlsx` (feuilles `Objectifs` + `Responsables`) et `avis_clients_api.json` (liste plate,
+  12 produits, note/nb_avis). JSON volontairement local (callout `requests` « pour aller plus loin » non exécuté).
+- **4.4 Nettoyage rapide** — TERMINÉ (4.4.1 → 4.4.3) sur une table « sale » créée en mémoire (`commandes_brutes` :
+  1 doublon, 2 `NaN`, `prix_unitaire` en texte). Bonus livré : différence `round()` (arrondi banquier) vs fonction
+  `arrondi_scolaire` (`Decimal` + `ROUND_HALF_UP`), + écart Excel/pandas sur les `.5`.
+- **4.5 TP S1 Reporting multi-sources** — TERMINÉ. Rapport par catégorie validé sur données RÉELLES Snowflake.
+  Objectifs Excel **recalibrés** sur l'échelle de `HISTORIQUE_VENTES` (CA réel : Entrée de gamme 2 151 599 €,
+  Standard 1 570 515 €, Premium 2 580 704 € ; total 6 302 818 €). Objectifs retenus : 2 000 000 / 1 600 000 /
+  2 700 000 → statut Atteint / Manqué / Manqué. Énoncé livré en **2 versions** (standard + très guidé pas à pas, le
+  guidé étant la version retenue). Correction en 1 cellule (`with` + agrégation serveur + merge×3 + `np.where`).
+  ⚠️ Le bloc « repli sans réseau » de la correction référence `ca_categorie_secours.csv` / `referentiel_secours.csv`
+  qui **n'ont pas été générés** (lignes commentées) — à produire si on veut un vrai plan B hors-ligne.
 
 ### ⏸️ ON S'EST ARRÊTÉ ICI
-Fin de **4.2 (Snowflake)**. **Prochaine étape : sous-section 4.3 (Lire Excel et JSON)**, à démarrer au format
-habituel (1 cellule Markdown + 1 cellule Code + déchiffrage/points dans la conversation). Pour 4.3, on pourra
-réutiliser `ventes_retours_export_excel.csv` / un nouvel Excel multi-feuilles à générer, et un petit JSON d'API
-à fabriquer si besoin (à proposer à Sébastien avant de produire les cellules).
+**Chapitre 4 (notebook `04_jour3.ipynb`) TERMINÉ** (4.1 → 4.5). Le **récap 4.6** et le **Quiz 2** ne seront PAS
+faits dans le notebook : Sébastien les rédige directement dans le **guide HTML** via l'app Claude.
+
+**Restes / pistes éventuelles :**
+- **Commit/push** en attente pour rendre les fichiers récupérables dans le ZIP GitHub : `objectifs_commerciaux_2026.xlsx`
+  (exception ajoutée au `.gitignore` car `*.xlsx` était ignoré), `avis_clients_api.json`, `generer_objectifs_et_avis.py`,
+  `.gitignore`, `04_jour3.ipynb`. Rappel sécurité : `account="LAWHABL-JB80530"` apparaît en clair dans le notebook
+  (identifiant de compte, pas un mot de passe) — neutraliser si le repo devient public.
+- Fichiers de secours CSV du TP 4.5 non générés (voir ci-dessus).
+- **PROCHAINE ÉTAPE : bloc J4 — Cas d'usage (voir §9).** On commence par le **Cas 1 (Google Trends)**, mais
+  **attendre que Sébastien dise quoi produire en premier** avant de lancer quoi que ce soit. Notebook J4 à créer
+  (nom à convenir, ex. `05_jour4.ipynb`). Quiz 3 final à la fin.

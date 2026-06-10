@@ -16,9 +16,11 @@ import pandas as pd
 # ---------------------------------------------------------------
 # 1. Excel multi-feuilles : objectifs_commerciaux_2026.xlsx
 # ---------------------------------------------------------------
+# Objectifs recales sur l'echelle reelle de HISTORIQUE_VENTES (Snowflake, 20 000 lignes).
+# Mix volontaire : Entree de gamme depasse, Standard et Premium manquent leur cible.
 objectifs = pd.DataFrame({
     "categorie": ["Entrée de gamme", "Standard", "Premium"],
-    "objectif_ca_t1": [3000.0, 7500.0, 3500.0],
+    "objectif_ca_t1": [2000000.0, 1600000.0, 2700000.0],
 })
 
 responsables = pd.DataFrame({
