@@ -1,16 +1,21 @@
-# TP Google Trends — Détection des nouveautés shopping France
+# TP Google Trends — Radar concurrentiel multi-sources Cdiscount
 
-> Fichier de cadrage à lire AVANT toute génération de code. Ce TP s'inscrit dans une formation Python Data Cdiscount.
+> **Fichier de cadrage à lire AVANT toute génération de code.**
+> Ce TP est l'aboutissement applicatif de la formation Python Data Cdiscount.
+> Il croise 3 sources de données (Google Trends, ventes, météo) pour produire
+> un rapport Excel multi-onglets exploitable par le service pricing.
 
 ---
 
 ## 1. Le contexte métier
 
-**Loïc Sutel** est responsable pricing chez Cdiscount. Il gère les prix de centaines de produits et a besoin de détecter, le plus tôt possible, les produits qui montent en tendance pour ajuster sa stratégie pricing en anticipation (et pas en réaction).
+**Loïc Sutel** est responsable pricing chez Cdiscount. Il gère le pricing de centaines de catégories de produits regroupées dans une **taxonomie hiérarchique** : environ 10 catégories principales (Électroménager, Salon, Multimédia, etc.) × environ 100 sous-catégories chacune (frigo, machine à laver, lave-vaisselle, four...).
 
-Aujourd'hui il fait ce travail à la main : il scrolle Google Trends, regarde les actualités, croise avec ses dashboards internes. C'est lent et il manque les signaux faibles. Sa demande : un script Python qui sort chaque matin **les nouveaux mots-clés qui émergent dans Google Trends catégorie shopping France**, triés par volume de recherche, en évitant de remontrer ceux des jours précédents.
+Aujourd'hui, Loïc aimerait surveiller les **tendances de recherche Google** sur ses produits pour anticiper son pricing, et croiser ces tendances avec ses **données de ventes internes** ainsi qu'avec la **météo** pour identifier des leviers d'action concrets. Mais c'est **infaisable manuellement** : il faudrait croiser des milliers de mots-clés avec ses tables de ventes et des données météo.
 
-C'est le cas d'usage type d'un radar concurrentiel automatisé que personne n'a le temps de tenir manuellement.
+**Sa demande** : un script Python qui produit automatiquement un **rapport Excel multi-onglets** croisant ces 3 sources et lui permet de prendre des décisions pricing immédiates.
+
+C'est le cas d'usage type d'un **radar concurrentiel automatisé** qui justifie à lui seul l'investissement dans une formation Python pour data analysts.
 
 ---
 
@@ -21,165 +26,418 @@ Le code généré sera lu, exécuté, modifié et réutilisé par des **data ana
 **Conséquences pour le code :**
 
 - Code **basique uniquement**, niveau débutant
-- Pas de constructions avancées (pas de list comprehensions imbriquées, pas de lambda complexes, pas de décorateurs, pas d'async/await, pas de classes sauf si vraiment nécessaire)
+- Pas de constructions avancées (pas de list comprehensions imbriquées, pas de lambda complexes, pas de décorateurs, pas d'async/await)
 - Privilégier la **lisibilité absolue** à la concision
-- Une instruction = une ligne (pas d'enchaînement type `df.dropna().reset_index().sort_values(...)` sur une seule ligne)
+- Une instruction = une ligne (pas d'enchaînement type `df.dropna().reset_index().sort_values(...)`)
 - Les analogies **SQL/Excel** sont bienvenues dans les commentaires
 
 ---
 
-## 3. Le pipeline cible — ce que le script doit faire
+## 3. Méthode pédagogique : pseudo-code puis code
 
-Le script déroule les étapes suivantes, dans cet ordre :
+Pour chaque section du notebook, on suit **strictement** ce protocole en 2 temps :
 
-1. **Récupérer les trends actuels** : interroger Google Trends pour la zone géographique France, catégorie shopping, sur les 7 derniers jours (168 heures). On récupère environ 400 trends bruts.
+### Temps 1 — Génération du pseudo-code (par Claude.ai ou Claude Code)
 
-2. **Charger l'historique** : lire un dossier `historique/` contenant 6 à 8 fichiers JSON, chacun représentant les trends d'un jour précédent (snapshots).
+Pour chaque cellule, **commencer par écrire le pseudo-code en français** dans un commentaire Python en début de cellule. Le pseudo-code décrit l'intention métier et la logique d'enchaînement, sans syntaxe Python.
 
-3. **Faire la différence** : retirer de la liste actuelle tout ce qui apparaissait déjà dans l'un quelconque des snapshots précédents. Équivalent SQL : `WHERE trend NOT IN (...)`. Équivalent Excel : un anti-RECHERCHEV pour ne garder que les valeurs absentes de la table de référence.
+### Temps 2 — Génération du code Python (par Claude Code)
 
-4. **Trier par trafic décroissant** : sur ce qui reste (les vraies nouveautés), trier par volume de recherche, du plus fort au plus faible.
+**Sous le pseudo-code**, écrire le code Python qui réalise l'algorithme décrit. Le pseudo-code reste dans la cellule sous forme de commentaires — il sert de documentation embarquée.
 
-5. **Garder le top 25** : limiter le résultat aux 25 trends les plus significatifs.
+### Exemple visuel d'une cellule
 
-6. **Afficher le résultat** dans le notebook (DataFrame pandas).
+```python
+# ============================================================
+# SECTION 3.2 : Boucle d'interrogation Google Trends
+# ============================================================
+#
+# PSEUDO-CODE :
+# Pour chaque categorie de la taxonomie :
+#     Pour chaque sous-categorie de la categorie :
+#         Tenter d'appeler Google Trends sur ce mot-cle
+#         Si succes : ajouter la mesure a la liste
+#         Si echec : logger l'erreur et continuer avec le suivant
+#         Attendre 1.5 seconde avant le prochain appel
+# A la fin : verifier qu'on a recu au moins 25 mesures sur 30
 
-7. **Sauvegarder le snapshot du jour** : ajouter au dossier `historique/` un nouveau fichier JSON avec la date du jour, contenant les trends récupérés à l'étape 1. Ainsi demain, ce qu'on a vu aujourd'hui devient à son tour de l'historique.
+# CODE :
+mesures_du_jour = []
+client_trends = TrendReq(hl="fr-FR", tz=60, timeout=(10, 30))
+
+for categorie_obj in taxonomie["categories"]:
+    nom_categorie = categorie_obj["nom"]
+    for sous_categorie in categorie_obj["sous_categories"]:
+        try:
+            client_trends.build_payload([sous_categorie], geo='FR', timeframe='today 3-m')
+            df_interet = client_trends.interest_over_time()
+            valeur = int(df_interet[sous_categorie].iloc[-1])
+            mesures_du_jour.append({...})
+        except Exception as erreur:
+            print(f"Echec pour '{sous_categorie}' : {erreur}")
+        time.sleep(1.5)
+
+print(f"Total : {len(mesures_du_jour)} mesures recuperees sur 30 attendues")
+```
+
+### Pourquoi cette méthode
+
+- Le stagiaire **comprend l'intention** avant de voir la syntaxe
+- Quand il relit son notebook plus tard, il a la **doc embarquée**
+- Si une portion plante, il sait **pourquoi elle existe**
+- C'est ce qu'on lui demandera de faire en autonomie **après la formation** : penser en français avant de coder
 
 ---
 
-## 4. Stack technique imposée
+## 4. L'architecture du pipeline
+
+```
++----------------+      +----------------+      +----------------+
+| Google Trends  |      | Snowflake      |      | Snowflake      |
+| (live)         |      | VENTES         |      | METEO_HISTORIQUE|
++--------+-------+      +--------+-------+      +--------+-------+
+         |                       |                       |
+         | (1) interrogation     | (2) lecture           | (3) lecture
+         | + insertion           |                       |
+         v                       v                       v
+   +-----------+           +-----------+           +-----------+
+   | Snowflake |           | DataFrame |           | DataFrame |
+   | MESURES_  |           | ventes    |           | meteo     |
+   | TRENDS    |           +-----+-----+           +-----+-----+
+   +-----+-----+                 |                       |
+         |                       |                       |
+         +-----------+-----------+-----------+-----------+
+                                 |
+                                 v
+                      +----------------------+
+                      | (4) Calculs croises  |
+                      | et correlations      |
+                      +----------+-----------+
+                                 |
+                                 v
+                      +----------------------+
+                      | (5) Rapport Excel    |
+                      | 8 onglets pour Loic  |
+                      +----------------------+
+```
+
+---
+
+## 5. Les 8 sections du notebook
+
+Le notebook est structuré en **8 sections numérotées**. Chacune contient plusieurs cellules avec pseudo-code + code, dans une granularité qui permet à Claude Code de générer une cellule à la fois.
+
+### Section 1 — Préparation et imports
+- **1.1** Imports Python (json, time, datetime, pandas, snowflake, openpyxl)
+- **1.2** Configuration Snowflake (constantes : account, warehouse, database, schema)
+- **1.3** Configuration générale (chemins de fichiers, paramètres)
+
+### Section 2 — Lecture de la taxonomie produits
+- **2.1** Ouvrir et lire `categories_cdiscount.json`
+- **2.2** Vérifier le contenu (afficher le nombre de catégories chargées)
+
+### Section 3 — Interrogation Google Trends et stockage Snowflake
+- **3.1** Préparation de la liste des mots-clés à interroger
+- **3.2** Boucle d'interrogation Google Trends avec try/except (cœur du script)
+- **3.3** Assemblage du DataFrame des mesures du jour
+- **3.4** Connexion à Snowflake et saisie du mot de passe
+- **3.5** Insertion bulk dans `MESURES_TRENDS` via `write_pandas`
+
+### Section 4 — Lecture des ventes depuis Snowflake
+- **4.1** Requête SELECT pour récupérer les 6 mois d'historique de ventes
+- **4.2** Exploration rapide du DataFrame retourné
+
+### Section 5 — Lecture de la météo depuis Snowflake
+- **5.1** Requête SELECT pour récupérer les 6 mois d'historique météo
+- **5.2** Exploration rapide du DataFrame retourné
+
+### Section 6 — Calculs d'analyses et de corrélations
+- **6.1** Requête SQL d'analyse comparative Trends (deltas vs moyenne 14 jours)
+- **6.2** Calcul de la matrice "Signaux pricing" (écart Trends vs Ventes par sous-catégorie)
+- **6.3** Calcul de la sensibilité météo (corrélation Pearson par sous-catégorie)
+- **6.4** Détection des anomalies (seuils glissants sur les ventes)
+- **6.5** Calcul des horizons prédictifs (corrélation avec lag)
+
+### Section 7 — Génération du rapport Excel multi-onglets
+- **7.1** Ouverture d'un `pd.ExcelWriter` sur `rapport_trends_YYYY-MM-DD.xlsx`
+- **7.2** Génération de l'onglet 1 "Signaux pricing"
+- **7.3** Génération de l'onglet 2 "Sensibilité météo"
+- **7.4** Génération de l'onglet 3 "Anomalies à investiguer"
+- **7.5** Génération de l'onglet 4 "Évolution Trends"
+- **7.6** Génération de l'onglet 5 "Évolution des ventes"
+- **7.7** Génération de l'onglet 6 "Horizons prédictifs"
+- **7.8** Génération de l'onglet 7 "Météo brute"
+- **7.9** Génération de l'onglet 8 "Données brutes"
+- **7.10** Fermeture du writer et confirmation
+
+### Section 8 — Clôture et démo automatisation
+- **8.1** Fermeture de la connexion Snowflake
+- **8.2** Affichage du récap final
+- **8.3** (Démo formateur) Configuration Task Scheduler Windows pour automatisation
+
+---
+
+## 6. Les 8 onglets du rapport Excel — détail du contenu
+
+### Onglet 1 — 🎯 Signaux pricing
+**Le money slide pour Loïc.** Matrice 2×2 des sous-catégories selon l'évolution Trends et l'évolution des ventes sur les 30 derniers jours.
+
+| | Ventes ↑ | Ventes → ou ↓ |
+|---|---|---|
+| **Trends ↑** | ✅ Cohérent | 🔴 **Demande non convertie** (action pricing à la baisse) |
+| **Trends → ou ↓** | 🟡 Sur-performance (pricing potentiellement à la hausse) | 🟢 Cohérent |
+
+Colonnes attendues : `SOUS_CATEGORIE`, `evolution_trends_pct`, `evolution_ventes_pct`, `quadrant`, `recommandation`.
+
+Trier par priorité d'action (quadrant rouge en haut).
+
+### Onglet 2 — 🌦️ Sensibilité météo
+Pour chaque sous-catégorie, coefficient de corrélation Pearson entre :
+- Ventes journalières et température
+- Ventes journalières et précipitations
+
+Colonnes : `SOUS_CATEGORIE`, `correlation_temperature`, `correlation_precipitations`, `interpretation`.
+
+Identifier les catégories `|correlation| > 0.5` comme **météo-sensibles** et les afficher en tête.
+
+### Onglet 3 — 🚨 Anomalies à investiguer
+Liste des **jours x produits** où les ventes ont été anormalement élevées ou basses (>1.5x ou <0.5x la moyenne sur 7 jours glissants). Pour chaque anomalie, afficher le contexte :
+
+Colonnes : `DATE_VENTE`, `PRODUIT`, `quantite`, `moyenne_7j`, `ratio`, `valeur_trends_ce_jour`, `temperature`, `precipitations`, `hypothese`.
+
+### Onglet 4 — 📊 Évolution Trends
+Pour chaque sous-catégorie, valeurs Google Trends agrégées sur plusieurs fenêtres temporelles :
+
+Colonnes : `SOUS_CATEGORIE`, `moyenne_7j`, `moyenne_30j`, `moyenne_90j`, `moyenne_180j`, `evolution_30j_vs_90j`.
+
+### Onglet 5 — 💰 Évolution des ventes
+Pour chaque sous-catégorie, ventes agrégées par mois sur 6 mois.
+
+Colonnes : `SOUS_CATEGORIE`, `ventes_mois_1`, `ventes_mois_2`, ..., `ventes_mois_6`, `evolution_pct`.
+
+### Onglet 6 — 🔮 Horizons prédictifs
+Analyse de lag Trends → Ventes. Pour chaque sous-catégorie, on teste plusieurs décalages (lag 0, 7, 14, 21, 30 jours) et on identifie celui qui maximise la corrélation.
+
+Colonnes : `SOUS_CATEGORIE`, `lag_optimal_jours`, `correlation_max`, `interpretation`.
+
+### Onglet 7 — 🌡️ Météo brute
+Dump complet de la table `METEO_HISTORIQUE` pour exploration libre.
+
+### Onglet 8 — 📁 Données brutes
+Dump complet de la table `VENTES` pour exploration libre.
+
+---
+
+## 7. Stack technique imposée
 
 - **Python 3.13.13** (venv `myenv` dans `C:\formation_python\`)
 - **pandas** pour la manipulation des données
-- **trendspyg 0.4.3** pour interroger Google Trends — fonction clé : `download_google_trends_csv(geo='FR', hours=168, category='shopping')`. Cette lib dépend de Chrome installé sur le poste (headless browser)
-- **json** (standard library) pour lire/écrire les snapshots
-- **os** + **pathlib** (standard library) pour gérer les chemins de fichiers
-- **datetime** pour timestamper le snapshot du jour
+- **pytrends 4.9.2** pour interroger Google Trends — indice d'intérêt 0-100 par mot-clé
+  (`build_payload` + `interest_over_time`). Tire **`lxml`** comme dépendance.
+- **snowflake-connector-python[pandas]** pour Snowflake (avec pyarrow)
+- **openpyxl** pour la génération Excel multi-onglets
+- **json**, **time**, **warnings**, **datetime**, **getpass** (standard library)
 
-Aucune autre dépendance externe.
+Filet de résilience : un **snapshot CSV** (`snapshot_trends_secours.csv`) pré-téléchargé sert de
+repli quand Google rate-limite (HTTP 429), afin que la cellule produise toujours les 30 mesures.
 
 ---
 
-## 5. Résilience attendue — gestion d'erreurs
+## 8. Configuration Snowflake
 
-L'appel à `trendspyg` peut échouer pour plusieurs raisons : rate limit Google, Chrome qui plante, réseau coupé, format de réponse modifié. **C'est inacceptable en production** : Loïc ne doit pas voir le script échouer un jour sans recours.
+- **Compte** : `LAWHABL-JB80530`
+- **Base** : `FORMATION_DB`
+- **Schéma** : `PUBLIC`
+- **Tables cibles** :
+  - `MESURES_TRENDS` (1530+ lignes pré-alimentées, INSERT autorisé)
+  - `VENTES` (~21 600 lignes pré-alimentées, SELECT seulement)
+  - `METEO_HISTORIQUE` (181 lignes pré-alimentées, SELECT seulement)
+- **Warehouse** : `COMPUTE_WH`
+- **Rôle des stagiaires** : `FORMATION_STAGIAIRE`
+- **Users stagiaires** : `STAGIAIRE_1` à `STAGIAIRE_10`, mot de passe `Formation2026!`
 
-Pattern à implémenter :
+---
+
+## 9. Schémas des 3 tables Snowflake
+
+### `MESURES_TRENDS`
+```
+ID INTEGER AUTOINCREMENT PRIMARY KEY
+DATE_MESURE DATE NOT NULL
+CATEGORIE VARCHAR(100) NOT NULL
+SOUS_CATEGORIE VARCHAR(100) NOT NULL
+MOT_CLE VARCHAR(200) NOT NULL
+VALEUR_INTERET INTEGER NOT NULL
+CREATED_AT TIMESTAMP_NTZ DEFAULT CURRENT_TIMESTAMP()
+```
+
+### `VENTES`
+```
+ID INTEGER AUTOINCREMENT PRIMARY KEY
+DATE_VENTE DATE NOT NULL
+CATEGORIE VARCHAR(100) NOT NULL
+SOUS_CATEGORIE VARCHAR(100) NOT NULL
+PRODUIT VARCHAR(200) NOT NULL
+QUANTITE INTEGER NOT NULL
+PRIX_UNITAIRE DECIMAL(10, 2) NOT NULL
+CHIFFRE_AFFAIRES DECIMAL(12, 2) NOT NULL
+CREATED_AT TIMESTAMP_NTZ DEFAULT CURRENT_TIMESTAMP()
+```
+
+### `METEO_HISTORIQUE`
+```
+ID INTEGER AUTOINCREMENT PRIMARY KEY
+DATE_METEO DATE NOT NULL UNIQUE
+TEMPERATURE_MOYENNE DECIMAL(5, 2) NOT NULL
+PRECIPITATIONS_MM DECIMAL(6, 2) NOT NULL
+ENSOLEILLEMENT_HEURES DECIMAL(4, 2) NOT NULL
+CREATED_AT TIMESTAMP_NTZ DEFAULT CURRENT_TIMESTAMP()
+```
+
+**Important** : toutes les colonnes sont en **MAJUSCULES** (convention Snowflake). Pour insérer un DataFrame, utiliser `write_pandas(..., quote_identifiers=False)`.
+
+---
+
+## 10. Résilience attendue — gestion d'erreurs
+
+L'appel à `pytrends` peut échouer pour plusieurs raisons : **rate limit Google (HTTP 429)** quand on enchaîne trop d'appels depuis la même IP, réseau coupé, format de réponse modifié.
+
+Pattern à implémenter pour chaque mot-clé :
 
 ```python
 try:
-    # Tentative de telechargement depuis Google Trends
-    df_trends = download_google_trends_csv(geo='FR', hours=168, category='shopping')
+    # Tentative d'interrogation Google Trends pour ce mot-cle
+    client_trends.build_payload([mot_cle], geo='FR', timeframe='today 3-m')
+    df_interet = client_trends.interest_over_time()
+    valeur = int(df_interet[mot_cle].iloc[-1])
 except Exception as erreur:
-    # Fallback : on charge le snapshot CSV de secours pre-telecharge
-    print(f"Echec du telechargement live : {erreur}")
-    print("Bascule sur le snapshot CSV de secours.")
-    df_trends = pd.read_csv("snapshot_secours.csv")
+    # En cas d'echec, on logge et on met le mot-cle de cote (repli snapshot ensuite)
+    print(f"Echec pour '{mot_cle}' : {erreur}")
+    valeur = None
 ```
 
-Le fichier `snapshot_secours.csv` est pré-téléchargé en amont par le formateur et placé à la racine du projet.
+Deuxième ligne de défense : les mots-clés en échec sont **complétés depuis le snapshot de secours**
+(`snapshot_trends_secours.csv`), si bien que le script ne plante jamais et produit toujours 30 mesures.
 
-**Aucune** opération de lecture externe (Google Trends, lecture JSON, écriture JSON) ne doit se faire sans try/except.
-
----
-
-## 6. Style de commentaires
-
-- **Tous les commentaires en français SANS ACCENTS** (la console Windows utilise l'encoding cp1252 qui peut faire planter les `é`, `è`, `à`, etc.)
-- **Un commentaire au-dessus de chaque bloc logique** expliquant ce qu'il fait en français simple
-- **Pas de commentaires triviaux** (pas de `x = 5  # on assigne 5 a x`)
-- **Privilégier les commentaires explicatifs** ("on retire les trends deja vus les jours precedents — equivalent d'un EXCEPT en SQL")
+**Aucune** opération de lecture externe (Google Trends) ou écriture (Snowflake INSERT, Excel) ne doit se faire sans try/except.
 
 ---
 
-## 7. Structure du projet sur disque
+## 11. Conventions de code
 
-Voici l'arborescence du dossier de travail :
-
-- `C:\formation_python\` (racine du projet)
-  - `TP_GOOGLE_TRENDS.md` — ce fichier de cadrage
-  - `tp_google-trends.ipynb` — le notebook à construire
-  - `snapshot_secours.csv` — fourni par le formateur (fallback)
-  - `historique/` — dossier des snapshots des jours précédents
-    - `2026-06-03-trends.json`
-    - `2026-06-04-trends.json`
-    - `2026-06-05-trends.json`
-    - `2026-06-06-trends.json`
-    - `2026-06-07-trends.json`
-    - `2026-06-08-trends.json`
-    - `2026-06-09-trends.json`
-    - (le snapshot du jour s'ajoutera ici à la fin de l'exécution)
+- **Tous les commentaires en français SANS ACCENTS** (encoding cp1252 Windows)
+- **Un commentaire au-dessus de chaque bloc logique** expliquant ce qu'il fait
+- **Pas de commentaires triviaux** (`x = 5  # on assigne 5 a x`)
+- **Privilégier les commentaires explicatifs** ("on calcule la moyenne mobile sur les 14 derniers jours, equivalent d'un AVG OVER en SQL")
+- **Noms de variables explicites en français** : `mesures_du_jour`, `df_ventes`, `mot_de_passe`, `taxonomie`
+- **Pas de chaînage de méthodes** : une instruction par ligne
+- **Snowflake colonnes MAJUSCULES** : utiliser `quote_identifiers=False` dans `write_pandas`
+- **Credentials JAMAIS en clair** : utiliser `getpass.getpass()` pour saisie au runtime
 
 ---
 
-## 8. Format des snapshots JSON
+## 12. Pièges connus à éviter
 
-Chaque fichier `YYYY-MM-DD-trends.json` dans le dossier `historique/` a la structure suivante :
-
-```json
-{
-  "date": "2026-06-03",
-  "geo": "FR",
-  "category": "shopping",
-  "trends": [
-    {"terme": "iPhone 17 Pro", "trafic": 125000},
-    {"terme": "Robot piscine Dolphin", "trafic": 89000},
-    {"terme": "Casque Sony WH-1000XM6", "trafic": 67000}
-  ]
-}
-```
-
-Pour l'étape "set-difference" : on extrait juste les termes (`item["terme"]`) de chaque snapshot historique, on les fusionne en un set Python `termes_deja_vus`, et on filtre le DataFrame actuel pour ne garder que les lignes dont `terme` n'est pas dans ce set.
+- **Encoding cp1252** : commentaires Python sans accents impérativement
+- **Colonnes MAJUSCULES Snowflake** : `write_pandas(..., quote_identifiers=False)`
+- **Rate limit Google Trends** : 1-2 secondes de `time.sleep()` entre chaque appel
+- **Credentials Snowflake en clair** : JAMAIS. Utiliser `getpass.getpass()`
+- **DataFrame vide après filtrage** : vérifier `len(df) > 0` avant `write_pandas`
+- **Comparaison de strings sensible à la casse** : normaliser via `.str.lower().str.strip()` si jointure avec données externes
+- **`pd.read_sql_query` retourne dates en datetime** : penser à faire `.dt.date` si on veut juste la date
 
 ---
 
-## 9. Variables clés et sortie attendue
+## 13. Mode d'emploi pour Claude Code en formation
 
-À la fin de l'exécution, le notebook doit contenir :
+### Étape 1 — Lecture initiale du TP
+Le stagiaire demande à Claude Code :
+> *« Lis le fichier `TP_GOOGLE_TRENDS.md` qui décrit le besoin métier. »*
 
-- Une variable `df_trends_aujourd_hui` : DataFrame pandas avec les ~400 trends récupérés (colonnes `terme`, `trafic`)
-- Une variable `termes_deja_vus` : set Python contenant les termes vus dans les snapshots historiques
-- Une variable `df_nouveautes` : DataFrame des trends nouveaux uniquement, triés par trafic décroissant
-- Une variable `df_top_25` : DataFrame des 25 nouveautés les plus significatives — c'est le **résultat métier** affiché à Loïc
+### Étape 2 — Génération du pseudo-code section par section
+Le stagiaire demande à Claude Code :
+> *« Génère le pseudo-code en français de la Section 1 (Préparation et imports). Découpe-le en petites portions claires correspondant aux sous-sections 1.1, 1.2, 1.3. »*
 
-Et sur disque : un nouveau fichier `historique/YYYY-MM-DD-trends.json` créé avec la date du jour.
+Claude Code écrit le pseudo-code dans une cellule du notebook.
 
----
+### Étape 3 — Génération du code Python sous chaque portion
+Le stagiaire demande à Claude Code :
+> *« Sous chaque portion de pseudo-code, écris le code Python correspondant. Garde le pseudo-code en commentaires au-dessus. »*
 
-## 10. Pièges connus à éviter
+### Étape 4 — Test de la cellule
+Le stagiaire exécute la cellule, vérifie l'output, et corrige avec Claude Code si nécessaire.
 
-- **Encoding cp1252** : les commentaires Python avec accents peuvent planter selon la console. Tout commentaire en français sans accents.
-- **Comparaison de strings sensible à la casse** : `"iphone 17"` ≠ `"iPhone 17"`. Normaliser en `.lower().strip()` avant la set-difference si on veut éviter les faux positifs.
-- **Lecture JSON corrompue** : un fichier mal formé fait planter `json.load`. Envelopper la lecture des snapshots dans une boucle avec try/except, et continuer même si un fichier est cassé.
-- **Volume de retour de trendspyg** : la fonction renvoie un DataFrame qui peut avoir des colonnes différentes selon la version. Toujours vérifier `df_trends.columns` avant d'utiliser une colonne précise.
-- **Fichier `snapshot_secours.csv` absent** : si même le fallback n'est pas disponible, afficher un message d'erreur clair et arrêter proprement, plutôt qu'une stack trace incompréhensible.
+### Étape 5 — Passage à la section suivante
+On répète pour les sections 2, 3, ..., 8.
 
----
+### Règles d'or pour Claude Code
 
-## 11. Volumétrie cible
-
-Le notebook complet doit faire environ **70 lignes de code** réparties en 5 à 8 cellules. Chaque cellule = une étape logique du pipeline.
-
----
-
-## 12. Pour aller plus loin (post-formation)
-
-Une **variante avec flux RSS** est possible (~15 lignes) en remplaçant l'appel à `trendspyg` par une lecture du flux RSS de Google Trends. Démontre le découplage source/traitement : tout le reste du pipeline (différence, tri, sauvegarde) reste identique.
-
-Une **variante avec IA** est possible (post-formation, démo formateur seul) : envoyer chaque nouveau trend à un LLM via `requests` pour le catégoriser automatiquement (catégorie produit Cdiscount, segment marché, urgence). **À ne pas implémenter dans ce TP.**
-
----
-
-## 13. Mode d'emploi pour Claude Code
-
-À chaque demande de génération de code dans le cadre de ce TP :
-
-1. **Référer à ce fichier** pour vérifier le style attendu, les pièges connus, les contraintes
-2. **Produire une portion à la fois** (5 à 15 lignes maximum)
+1. **Référer à ce fichier** pour vérifier le style attendu, les pièges, les contraintes
+2. **Une portion à la fois** (5 à 15 lignes maximum)
 3. **Commenter en français sans accents** chaque ligne ou groupe logique
 4. **Toujours envelopper les sources externes** dans try/except
-5. **Respecter exactement les noms de variables** définis en section 9
-6. **Ne pas inventer de fonctionnalités** non listées dans le pipeline section 3
+5. **Snowflake : agrégations et calculs côté serveur** dès que possible
+6. **Ne pas inventer** de fonctionnalités non listées dans les 8 sections
+7. **Pour `pytrends`** : ne PAS activer le retry interne (`retries=`/`backoff_factor=`) — incompatible
+   avec urllib3 2.x (`TypeError: method_whitelist`). Gérer le 429 par try/except + repli snapshot.
 
 Si une demande sort de ce périmètre ou semble ambiguë, demander confirmation au formateur avant de coder.
+
+---
+
+## 14. Démo finale — Automatisation avec Task Scheduler (Section 8)
+
+Une fois le notebook complet et fonctionnel, le formateur fait une **démo de 15-20 minutes en clôture** pour montrer comment automatiser l'exécution.
+
+### Scénario de la démo
+
+Le formateur partage son écran et :
+
+1. Ouvre le **Task Scheduler Windows** (`taskschd.msc`)
+2. Crée une nouvelle tâche basique :
+   - **Action** : "Démarrer un programme"
+   - **Programme** : `C:\formation_python\myenv\Scripts\python.exe`
+   - **Arguments** : `C:\analyse_google_trends\analyse_trends.py`
+   - **Démarrer dans** : `C:\analyse_google_trends\`
+3. Planifie la tâche :
+   - Tous les **lundis et jeudis** à **8h00**
+   - (Ou tous les jours, tous les 3 jours, etc. — montrer la flexibilité)
+4. Lance la tâche manuellement pour vérifier qu'elle fonctionne
+5. Explique : *« Désormais, Loïc reçoit son rapport Excel à 8h05 chaque lundi et jeudi, sans intervention humaine. C'est ça la vraie valeur ajoutée de Python pour vous. »*
+
+### Note technique pour Task Scheduler
+
+Pour que la tâche fonctionne sans intervention humaine, le mot de passe Snowflake doit être stocké de manière sécurisée (variable d'environnement Windows, fichier `.env`, ou key-pair authentication). Cette partie n'est **pas démontrée en formation** (sortirait du périmètre). À mentionner comme cas post-formation.
+
+---
+
+## 15. Lien avec les cas Raphaël (post-formation)
+
+Ce TP est massivement réutilisable pour l'équipe de Raphaël Combasson. Les **patterns** que les stagiaires repartent avec :
+
+| Pattern du TP | Cas d'usage métier Raphaël |
+|---|---|
+| Boucle sur API externe + gestion d'erreurs | API Google Analytics, API internes |
+| `write_pandas()` insertion bulk Snowflake | Ingestion de données dans l'entrepôt |
+| Requêtes SQL côté serveur avec CTE | Tous les reportings internes |
+| Génération Excel multi-onglets | Tous les rapports pour managers métier |
+| Calcul de corrélation Pearson | Croisement de N'importe quelle source |
+| Détection d'anomalies (seuils glissants) | Détection de fraude, monitoring opérationnel |
+| Analyse de lag | Identification d'indicateurs avancés |
+| Task Scheduler | Automatisation de tout rapport récurrent |
+
+C'est un **kit de productivité** pour data analyst.
+
+---
+
+## 16. Structure finale du projet sur disque
+
+```
+C:\analyse_google_trends\
+├── TP_GOOGLE_TRENDS.md                ← ce fichier
+├── categories_cdiscount.json          ← taxonomie produits
+├── analyse_trends.ipynb               ← le notebook à construire en formation
+└── rapport_trends_YYYY-MM-DD.xlsx     ← généré à chaque exécution
+```
+
+Les scripts de seeding (`create_tables.sql`, `seeding_trends.py`, `seeding_meteo.py`, `seeding_ventes.py`) sont à utiliser **une seule fois en amont** par le formateur et ne sont pas redistribués aux stagiaires.

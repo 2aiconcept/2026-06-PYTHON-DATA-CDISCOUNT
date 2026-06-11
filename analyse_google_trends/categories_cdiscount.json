@@ -1,0 +1,89 @@
+{
+  "version": "1.0",
+  "client": "Cdiscount",
+  "geographie": "FR",
+  "description": "Taxonomie produits pour analyse Google Trends — 10 categories x 3 sous-categories",
+  "date_creation": "2026-06-10",
+  "categories": [
+    {
+      "nom": "Électroménager",
+      "sous_categories": [
+        "frigo",
+        "machine à laver",
+        "lave-vaisselle"
+      ]
+    },
+    {
+      "nom": "Salon",
+      "sous_categories": [
+        "canapé d'angle",
+        "fauteuil relax",
+        "table basse"
+      ]
+    },
+    {
+      "nom": "Multimédia",
+      "sous_categories": [
+        "télévision OLED",
+        "barre de son",
+        "vidéoprojecteur"
+      ]
+    },
+    {
+      "nom": "Informatique",
+      "sous_categories": [
+        "PC portable",
+        "écran 27 pouces",
+        "imprimante laser"
+      ]
+    },
+    {
+      "nom": "Téléphonie",
+      "sous_categories": [
+        "iPhone 17",
+        "smartphone Samsung",
+        "coque de protection"
+      ]
+    },
+    {
+      "nom": "Jardin",
+      "sous_categories": [
+        "barbecue gaz",
+        "tondeuse électrique",
+        "salon de jardin"
+      ]
+    },
+    {
+      "nom": "Bricolage",
+      "sous_categories": [
+        "perceuse visseuse",
+        "escabeau",
+        "aspirateur atelier"
+      ]
+    },
+    {
+      "nom": "Cuisine",
+      "sous_categories": [
+        "robot multifonction",
+        "four micro-ondes",
+        "cafetière à grain"
+      ]
+    },
+    {
+      "nom": "Mode et accessoires",
+      "sous_categories": [
+        "sac à dos",
+        "montre connectée",
+        "sneakers"
+      ]
+    },
+    {
+      "nom": "Sport et loisirs",
+      "sous_categories": [
+        "vélo électrique",
+        "trottinette électrique",
+        "tente camping"
+      ]
+    }
+  ]
+}
