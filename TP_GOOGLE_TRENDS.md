@@ -131,6 +131,7 @@ Le notebook est structuré en **8 sections numérotées**. Chacune contient plus
 - **1.1** Imports Python (json, time, datetime, pandas, snowflake, openpyxl)
 - **1.2** Configuration Snowflake (constantes : account, warehouse, database, schema)
 - **1.3** Configuration générale (chemins de fichiers, paramètres)
+- **1.4** **Connexion à Snowflake (UNE SEULE FOIS)** — `getpass` + `connect()` tout en haut du notebook. Voir la contrainte « une connexion / un close » ci-dessous.
 
 ### Section 2 — Lecture de la taxonomie produits
 - **2.1** Ouvrir et lire `categories_cdiscount.json`
@@ -140,8 +141,7 @@ Le notebook est structuré en **8 sections numérotées**. Chacune contient plus
 - **3.1** Préparation de la liste des mots-clés à interroger
 - **3.2** Boucle d'interrogation Google Trends avec try/except (cœur du script)
 - **3.3** Assemblage du DataFrame des mesures du jour
-- **3.4** Connexion à Snowflake et saisie du mot de passe
-- **3.5** Insertion bulk dans `MESURES_TRENDS` via `write_pandas`
+- **3.4** Insertion bulk dans `MESURES_TRENDS` via `write_pandas` (réutilise la connexion ouverte en 1.4)
 
 ### Section 4 — Lecture des ventes depuis Snowflake
 - **4.1** Requête SELECT pour récupérer les 6 mois d'historique de ventes
@@ -171,7 +171,7 @@ Le notebook est structuré en **8 sections numérotées**. Chacune contient plus
 - **7.10** Fermeture du writer et confirmation
 
 ### Section 8 — Clôture et démo automatisation
-- **8.1** Fermeture de la connexion Snowflake
+- **8.1** Fermeture de la connexion Snowflake (**le SEUL `close()`, tout en bas**)
 - **8.2** Affichage du récap final
 - **8.3** (Démo formateur) Configuration Task Scheduler Windows pour automatisation
 
@@ -256,6 +256,28 @@ repli quand Google rate-limite (HTTP 429), afin que la cellule produise toujours
 - **Rôle des stagiaires** : `FORMATION_STAGIAIRE`
 - **Users stagiaires** : `STAGIAIRE_1` à `STAGIAIRE_10`, mot de passe `Formation2026!`
 
+### ⚠️ Contrainte impérative — UNE seule connexion, UN seul `close()`
+
+> **On ouvre la connexion Snowflake une seule fois, tout en haut du notebook (section 1.4), et on la
+> ferme une seule fois, tout en bas (section 8.1). Aucun autre `connect()` ni `close()` dans le notebook.**
+
+**Pourquoi.** En salle, les 10 stagiaires partagent **la même adresse IP** (le réseau de la formation). Chaque
+appel à `snowflake.connector.connect()` est une **tentative de login** ; si chacun relance plusieurs fois sa
+cellule de connexion, Snowflake voit une **rafale de logins depuis une seule IP** et applique un **rate limit**
+qui bloque tout le monde (erreur de connexion). En se connectant **une seule fois** par stagiaire, on reste
+sous le seuil.
+
+**Conséquences concrètes pour le code :**
+
+- La connexion (`getpass` + `connect()`) vit en **section 1.4**, juste après la configuration. Elle est
+  protégée par `try/except` et stocke le handle dans `connexion`.
+- Toutes les sections suivantes (insertion 3.4, lectures ventes/météo 4-5, analyses 6) **réutilisent
+  `connexion` telle quelle** — elles ne rouvrent jamais de connexion.
+- Le **seul** `connexion.close()` est en **section 8.1**, après la génération du rapport Excel. Les sections
+  8.2 (récap) et 8.3 (démo Task Scheduler) ne touchent pas à la connexion.
+- ❌ Ne PAS utiliser de bloc `with snowflake.connector.connect(...) as ...:` par cellule (rouvrirait/refermerait
+  à chaque exécution). On garde une connexion longue, explicitement ouverte/fermée.
+
 ---
 
 ## 9. Schémas des 3 tables Snowflake
@@ -333,6 +355,7 @@ Deuxième ligne de défense : les mots-clés en échec sont **complétés depuis
 - **Pas de chaînage de méthodes** : une instruction par ligne
 - **Snowflake colonnes MAJUSCULES** : utiliser `quote_identifiers=False` dans `write_pandas`
 - **Credentials JAMAIS en clair** : utiliser `getpass.getpass()` pour saisie au runtime
+- **Connexion Snowflake unique** : un seul `connect()` en 1.4 (haut), un seul `close()` en 8.1 (bas) — voir §8
 
 ---
 
@@ -341,6 +364,7 @@ Deuxième ligne de défense : les mots-clés en échec sont **complétés depuis
 - **Encoding cp1252** : commentaires Python sans accents impérativement
 - **Colonnes MAJUSCULES Snowflake** : `write_pandas(..., quote_identifiers=False)`
 - **Rate limit Google Trends** : 1-2 secondes de `time.sleep()` entre chaque appel
+- **Rate limit Snowflake (login par IP)** : 10 stagiaires = 1 seule IP. UNE connexion en 1.4, UN `close()` en 8.1, jamais de reconnexion par cellule (voir §8)
 - **Credentials Snowflake en clair** : JAMAIS. Utiliser `getpass.getpass()`
 - **DataFrame vide après filtrage** : vérifier `len(df) > 0` avant `write_pandas`
 - **Comparaison de strings sensible à la casse** : normaliser via `.str.lower().str.strip()` si jointure avec données externes

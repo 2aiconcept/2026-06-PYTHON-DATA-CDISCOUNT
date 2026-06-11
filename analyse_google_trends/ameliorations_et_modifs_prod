@@ -1,0 +1,4 @@
+1. pour automatisation prévoir sur votre machine virtuelle et ou pc fixe
+2. remplacer le json categories_cdiscount.json par appel tables cdiscount snowflake cdiscount
+3. pour l'envoie de rapports par email demander smtp à cdiscount 
+4. mettre en forme les fichiers excel (comme on l'a fait dans la formation pandas)
