@@ -69,6 +69,8 @@ desktop.ini
 *.db
 rapport_*
 catalogue.db
+# Exception : rapport exemple du TP Google Trends -> doit etre dans le ZIP GitHub
+!analyse_google_trends/rapport_trends_2026-06-11.xlsx
 
 # =====================================================
 # Brouillons / debug perso du formateur
